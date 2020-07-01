@@ -2,7 +2,7 @@
 resource "aws_s3_bucket" "this" {
   bucket = var.aws_s3_bucket_bucket
   acl    = "public-read"
-  policy = "${file("policy.json")}"
+  policy = file("policy.json")
   website {
     index_document = "index.html"
     error_document = "error.html"
@@ -40,7 +40,7 @@ resource "aws_cloudfront_distribution" "this" {
     min_ttl          = 0
     # path_pattern
     # smooth_streaming 
-    target_origin_id = "${local.s3_origin_id}"
+    target_origin_id = local.s3_origin_id
     # trusted_signers
     viewer_protocol_policy = "allow-all"
   }
@@ -51,10 +51,10 @@ resource "aws_cloudfront_distribution" "this" {
   # logging_config
   # ordered_cache_behavior
   origin {
-    domain_name = "${aws_s3_bucket.this.bucket_regional_domain_name}"
-    origin_id   = "${local.s3_origin_id}"
+    domain_name = aws_s3_bucket.this.bucket_regional_domain_name
+    origin_id   = local.s3_origin_id
     s3_origin_config {
-      origin_access_identity = "${aws_cloudfront_origin_access_identity.this.cloudfront_access_identity_path}"
+      origin_access_identity = aws_cloudfront_origin_access_identity.this.cloudfront_access_identity_path
     }
   }
   # origin_group 

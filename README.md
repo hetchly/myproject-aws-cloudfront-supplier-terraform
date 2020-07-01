@@ -27,7 +27,7 @@ $ terraform apply
 ## (In Progress) Module Usage
 Include this repository as a module in your existing terraform code:
 ```
-module "ecr" {
+module "cloudfront" {
   source = "git::https://github.com/jrdalino/aws-cloudfront-terraform.git?ref=master"
 }
 ```
